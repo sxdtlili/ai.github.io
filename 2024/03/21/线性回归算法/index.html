@@ -1,12 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  
-  
-  <title>线性回归算法 | LiLi&#39;s Journey in Machine Learning</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="第四章 线性回归算法1. 载入分析所需要的模块和函数#载入分析所需要的模块和函数 12345678910import pandas as pd#载入pandas模块，并简称为pdimport numpy as np#载入numpy模块，并简称为npimport matplotlib.pyplot as plt#载入matplotlib.pyplot模块，并简称为pltimport seaborn">
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sxdtlili.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="第四章 线性回归算法1. 载入分析所需要的模块和函数#载入分析所需要的模块和函数 12345678910import pandas as pd#载入pandas模块，并简称为pdimport numpy as np#载入numpy模块，并简称为npimport matplotlib.pyplot as plt#载入matplotlib.pyplot模块，并简称为pltimport seaborn">
 <meta property="og:type" content="article">
 <meta property="og:title" content="线性回归算法">
 <meta property="og:url" content="https://sxdtlili.github.io/2024/03/21/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95/index.html">
@@ -18,91 +31,185 @@
 <meta property="article:author" content="LiLi">
 <meta property="article:tag" content="线性回归">
 <meta name="twitter:card" content="summary">
-  
-    <link rel="alternate" href="/atom.xml" title="LiLi's Journey in Machine Learning" type="application/atom+xml">
-  
-  
-    <link rel="shortcut icon" href="/favicon.png">
-  
-  
-    
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
 
-  
-  
-<link rel="stylesheet" href="/css/style.css">
 
-  
-    
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+<link rel="canonical" href="https://sxdtlili.github.io/2024/03/21/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95/">
 
-  
-  
-<meta name="generator" content="Hexo 6.3.0"></head>
 
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">LiLi&#39;s Journey in Machine Learning</a>
-      </h1>
-      
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://sxdtlili.github.io/2024/03/21/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95/","path":"2024/03/21/线性回归算法/","title":"线性回归算法"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>线性回归算法 | LiLi's Journey in Machine Learning</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
     </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LiLi's Journey in Machine Learning</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
         
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-        
-          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
-        
-        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://sxdtlili.github.io"></form>
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">第四章 线性回归算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E8%BD%BD%E5%85%A5%E5%88%86%E6%9E%90%E6%89%80%E9%9C%80%E8%A6%81%E7%9A%84%E6%A8%A1%E5%9D%97%E5%92%8C%E5%87%BD%E6%95%B0"><span class="nav-number">1.1.</span> <span class="nav-text">1. 载入分析所需要的模块和函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E6%95%B0%E6%8D%AE%E8%AF%BB%E5%8F%96%E5%8F%8A%E8%A7%82%E5%AF%9F"><span class="nav-number">1.2.</span> <span class="nav-text">2. 数据读取及观察</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%8F%8F%E8%BF%B0%E6%80%A7%E5%88%86%E6%9E%90"><span class="nav-number">1.3.</span> <span class="nav-text">3. 描述性分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E5%AF%B9%E6%95%B0%E6%8D%AE%E9%9B%86%E8%BF%9B%E8%A1%8C%E6%8F%8F%E8%BF%B0%E6%80%A7%E5%88%86%E6%9E%90"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 对数据集进行描述性分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E5%AF%B9%E6%95%B0%E6%8D%AE%E8%BF%9B%E8%A1%8C%E8%BD%AC%E7%BD%AE"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 对数据进行转置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E5%AF%B9%E6%95%B0%E6%8D%AE%E9%9B%86%E4%B8%AD%E7%9A%84%E5%8F%98%E9%87%8F%E6%B1%82%E5%9D%87%E5%80%BC"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.3 对数据集中的变量求均值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-%E5%AF%B9%E6%95%B0%E6%8D%AE%E9%9B%86%E4%B8%AD%E7%9A%84%E5%8F%98%E9%87%8F%E6%B1%82%E6%96%B9%E5%B7%AE"><span class="nav-number">1.3.4.</span> <span class="nav-text">3.4 对数据集中的变量求方差</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-%E5%AF%B9%E6%95%B0%E6%8D%AE%E9%9B%86%E4%B8%AD%E7%9A%84%E5%8F%98%E9%87%8F%E6%B1%82%E6%A0%87%E5%87%86%E5%B7%AE"><span class="nav-number">1.3.5.</span> <span class="nav-text">3.5 对数据集中的变量求标准差</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6-%E5%AF%B9%E6%95%B0%E6%8D%AE%E9%9B%86%E4%B8%AD%E7%9A%84%E5%8F%98%E9%87%8F%E6%B1%82%E5%8D%8F%E6%96%B9%E5%B7%AE%E7%9F%A9%E9%98%B5"><span class="nav-number">1.3.6.</span> <span class="nav-text">3.6 对数据集中的变量求协方差矩阵</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E6%AD%A3%E6%80%81%E6%80%A7%E6%A3%80%E9%AA%8C"><span class="nav-number">1.4.</span> <span class="nav-text">4. 正态性检验</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-Shapiro-Wilk-test%E6%A3%80%E9%AA%8C"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1 Shapiro-Wilk test检验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E4%BD%BF%E7%94%A8kstest%E6%A3%80%E9%AA%8C%E6%95%B0%E6%8D%AE%E6%98%AF%E5%90%A6%E6%9C%8D%E4%BB%8E%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83"><span class="nav-number">1.4.2.</span> <span class="nav-text">4.2 使用kstest检验数据是否服从正态分布</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E4%BD%9C%E5%9B%BE"><span class="nav-number">1.5.</span> <span class="nav-text">5 作图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-%E7%9B%B4%E6%96%B9%E5%9B%BE"><span class="nav-number">1.5.1.</span> <span class="nav-text">5.1 直方图</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%B4%E6%96%B9%E5%9B%BE"><span class="nav-number">2.</span> <span class="nav-text">直方图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-%E5%AF%86%E5%BA%A6%E5%9B%BE"><span class="nav-number">2.0.1.</span> <span class="nav-text">5.2 密度图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-%E7%AE%B1%E7%BA%BF%E5%9B%BE"><span class="nav-number">2.0.2.</span> <span class="nav-text">5.3 箱线图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4-%E5%B0%8F%E6%8F%90%E7%90%B4%E5%9B%BE"><span class="nav-number">2.0.3.</span> <span class="nav-text">5.4 小提琴图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-5-%E6%AD%A3%E6%80%81-QQ-%E5%9B%BE"><span class="nav-number">2.0.4.</span> <span class="nav-text">5.5 正态 QQ 图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-6-%E6%95%A3%E7%82%B9%E5%9B%BE%E5%92%8C%E7%82%B9%E7%BA%BF%E5%9B%BE"><span class="nav-number">2.0.5.</span> <span class="nav-text">5.6 散点图和点线图</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%A3%E7%82%B9%E5%9B%BE%E5%92%8C%E7%82%B9%E7%BA%BF%E5%9B%BE"><span class="nav-number">3.</span> <span class="nav-text">散点图和点线图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-7-%E7%83%AD%E5%8A%9B%E5%9B%BE"><span class="nav-number">3.0.1.</span> <span class="nav-text">5.7 热力图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E5%9B%9E%E5%BD%92%E6%8B%9F%E5%90%88%E5%9B%BE"><span class="nav-number">3.1.</span> <span class="nav-text">6 回归拟合图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E8%81%94%E5%90%88%E5%88%86%E5%B8%83%E5%9B%BE"><span class="nav-number">3.2.</span> <span class="nav-text">7 联合分布图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-%E7%9B%B8%E5%85%B3%E6%80%A7%E5%88%86%E6%9E%90"><span class="nav-number">3.3.</span> <span class="nav-text">8 相关性分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8-1-%E7%9A%AE%E5%B0%94%E9%80%8A%E7%9B%B8%E5%85%B3%E7%B3%BB%E6%95%B0%E7%9F%A9%E9%98%B5"><span class="nav-number">3.3.1.</span> <span class="nav-text">8.1 皮尔逊相关系数矩阵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-%E7%BB%98%E5%88%B6%E7%9B%B8%E5%85%B3%E7%9F%A9%E9%98%B5%E7%9A%84%E7%83%AD%E5%9B%BE"><span class="nav-number">3.3.2.</span> <span class="nav-text">8.2 绘制相关矩阵的热图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-3-%E6%96%AF%E7%9A%AE%E5%B0%94%E6%9B%BC%E7%AD%89%E7%BA%A7%E7%9B%B8%E5%85%B3%E7%B3%BB%E6%95%B0%E7%9F%A9%E9%98%B5"><span class="nav-number">3.3.3.</span> <span class="nav-text">8.3 斯皮尔曼等级相关系数矩阵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-4-%E8%82%AF%E5%BE%B7%E5%B0%94%E7%AD%89%E7%BA%A7%E7%9B%B8%E5%85%B3%E7%B3%BB%E6%95%B0%E7%9F%A9%E9%98%B5"><span class="nav-number">3.3.4.</span> <span class="nav-text">8.4 肯德尔等级相关系数矩阵</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-%E4%BD%BF%E7%94%A8-smf-%E8%BF%9B%E8%A1%8C%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92"><span class="nav-number">3.4.</span> <span class="nav-text">9 使用 smf 进行线性回归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-%E5%A4%9A%E9%87%8D%E5%85%B1%E7%BA%BF%E6%80%A7%E6%A3%80%E9%AA%8C"><span class="nav-number">3.5.</span> <span class="nav-text">10 多重共线性检验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-%E4%BD%BF%E7%94%A8-sklearn-%E8%BF%9B%E8%A1%8C%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92"><span class="nav-number">3.6.</span> <span class="nav-text">11 使用 sklearn 进行线性回归</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#11-1-%E4%BD%BF%E7%94%A8%E9%AA%8C%E8%AF%81%E9%9B%86%E6%B3%95%E8%BF%9B%E8%A1%8C%E6%A8%A1%E5%9E%8B%E6%8B%9F%E5%90%88"><span class="nav-number">3.6.1.</span> <span class="nav-text">11.1 使用验证集法进行模型拟合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-2-%E8%AE%A1%E7%AE%97%E5%9B%9E%E5%BD%92%E7%B3%BB%E6%95%B0%E5%80%BC"><span class="nav-number">3.6.2.</span> <span class="nav-text">11.2 计算回归系数值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-3-%E6%A8%A1%E5%9E%8B%E5%9C%A8%E8%AE%AD%E7%BB%83%E9%9B%86%E4%B8%AD%E7%9A%84%E6%8B%9F%E5%90%88%E4%BC%98%E5%BA%A6%EF%BC%88%E5%8F%AF%E5%86%B3%E7%B3%BB%E6%95%B0%EF%BC%89"><span class="nav-number">3.6.3.</span> <span class="nav-text">11.3 模型在训练集中的拟合优度（可决系数）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-4-%E5%93%8D%E5%BA%94%E5%8F%98%E9%87%8F%E5%9F%BA%E4%BA%8E%E6%B5%8B%E8%AF%95%E9%9B%86%E7%9A%84%E9%A2%84%E6%B5%8B%E7%BB%93%E6%9E%9C"><span class="nav-number">3.6.4.</span> <span class="nav-text">11.4 响应变量基于测试集的预测结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-5-%E6%B5%8B%E8%AF%95%E9%9B%86%E7%9A%84%E5%9D%87%E6%96%B9%E8%AF%AF%E5%B7%AE"><span class="nav-number">3.6.5.</span> <span class="nav-text">11.5 测试集的均方误差</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-6-%E8%AE%A1%E7%AE%97%E6%B5%8B%E8%AF%95%E9%9B%86%E7%9A%84%E5%8F%AF%E5%86%B3%E7%B3%BB%E6%95%B0"><span class="nav-number">3.6.6.</span> <span class="nav-text">11.6 计算测试集的可决系数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-7-%E6%9B%B4%E6%8D%A2%E9%9A%8F%E6%9C%BA%E6%95%B0%E7%A7%8D%E5%AD%90%EF%BC%8C%E4%BD%BF%E7%94%A8%E9%AA%8C%E8%AF%81%E9%9B%86%E6%B3%95%E8%BF%9B%E8%A1%8C%E6%A8%A1%E5%9E%8B%E6%8B%9F%E5%90%88"><span class="nav-number">3.6.7.</span> <span class="nav-text">11.7 更换随机数种子，使用验证集法进行模型拟合</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-%E4%BD%BF%E7%94%A810%E6%8A%98%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81%E6%B3%95%E8%BF%9B%E8%A1%8C%E6%A8%A1%E5%9E%8B%E6%8B%9F%E5%90%88"><span class="nav-number">3.7.</span> <span class="nav-text">12 使用10折交叉验证法进行模型拟合</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#12-1-%E4%BD%BF%E7%94%A810%E6%8A%98%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81%E6%B3%95%E8%BF%9B%E8%A1%8C%E6%A8%A1%E5%9E%8B%E6%8B%9F%E5%90%88"><span class="nav-number">3.7.1.</span> <span class="nav-text">12.1 使用10折交叉验证法进行模型拟合</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A810%E6%8A%98%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81%E6%B3%95%E8%BF%9B%E8%A1%8C%E6%A8%A1%E5%9E%8B%E6%8B%9F%E5%90%88"><span class="nav-number">4.</span> <span class="nav-text">使用10折交叉验证法进行模型拟合</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#12-2-%E6%98%BE%E7%A4%BA%E6%AF%8F%E4%B8%80%E6%8A%98%E7%9A%84%E5%8F%AF%E5%86%B3%E7%B3%BB%E6%95%B0"><span class="nav-number">4.0.1.</span> <span class="nav-text">12.2 显示每一折的可决系数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-3-%E8%AE%A1%E7%AE%97%E5%90%84%E6%8A%98%E6%A0%B7%E6%9C%AC%E5%8F%AF%E5%86%B3%E7%B3%BB%E6%95%B0%E7%9A%84%E5%9D%87%E5%80%BC"><span class="nav-number">4.0.2.</span> <span class="nav-text">12.3 计算各折样本可决系数的均值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-4-%E8%AE%A1%E7%AE%97%E5%90%84%E6%8A%98%E6%A0%B7%E6%9C%AC%E5%8F%AF%E5%86%B3%E7%B3%BB%E6%95%B0%E7%9A%84%E6%A0%87%E5%87%86%E5%B7%AE"><span class="nav-number">4.0.3.</span> <span class="nav-text">12.4 计算各折样本可决系数的标准差</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-5-%E6%98%BE%E7%A4%BA%E5%90%84%E6%8A%98%E6%A0%B7%E6%9C%AC%E7%9A%84%E5%9D%87%E6%96%B9%E8%AF%AF%E5%B7%AE"><span class="nav-number">4.0.4.</span> <span class="nav-text">12.5 显示各折样本的均方误差</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-6-%E5%90%84%E6%8A%98%E6%A0%B7%E6%9C%AC%E5%9D%87%E6%96%B9%E8%AF%AF%E5%B7%AE%E7%9A%84%E5%9D%87%E5%80%BC"><span class="nav-number">4.0.5.</span> <span class="nav-text">12.6 各折样本均方误差的均值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-7-%E6%9B%B4%E6%8D%A2%E9%9A%8F%E6%9C%BA%E6%95%B0%E7%A7%8D%E5%AD%90%E8%A7%82%E5%AF%9F%E5%9D%87%E6%96%B9%E8%AF%AF%E5%B7%AEMSE%E5%A4%A7%E5%B0%8F"><span class="nav-number">4.0.6.</span> <span class="nav-text">12.7 更换随机数种子观察均方误差MSE大小</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9B%B4%E6%8D%A2%E9%9A%8F%E6%9C%BA%E6%95%B0%E7%A7%8D%E5%AD%90%EF%BC%8C%E5%B9%B6%E4%B8%8E%E4%B8%8A%E6%AD%A5%E5%BE%97%E5%88%B0%E7%BB%93%E6%9E%9C%E8%BF%9B%E8%A1%8C%E5%AF%B9%E6%AF%94%EF%BC%8C%E8%A7%82%E5%AF%9F%E5%9D%87%E6%96%B9%E8%AF%AF%E5%B7%AEMSE%E5%A4%A7%E5%B0%8F"><span class="nav-number">5.</span> <span class="nav-text">更换随机数种子，并与上步得到结果进行对比，观察均方误差MSE大小</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#13-%E4%BD%BF%E7%94%A810%E6%8A%98%E9%87%8D%E5%A4%8D10%E6%AC%A1%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81%E6%B3%95%E8%BF%9B%E8%A1%8C%E6%A8%A1%E5%9E%8B%E6%8B%9F%E5%90%88"><span class="nav-number">5.1.</span> <span class="nav-text">13 使用10折重复10次交叉验证法进行模型拟合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-%E4%BD%BF%E7%94%A8%E7%95%99%E4%B8%80%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81%E6%B3%95%E8%BF%9B%E8%A1%8C%E6%A8%A1%E5%9E%8B%E6%8B%9F%E5%90%88"><span class="nav-number">5.2.</span> <span class="nav-text">14 使用留一交叉验证法进行模型拟合</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E7%95%99%E4%B8%80%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81%E6%B3%95%E8%BF%9B%E8%A1%8C%E6%A8%A1%E5%9E%8B%E6%8B%9F%E5%90%88"><span class="nav-number">6.</span> <span class="nav-text">使用留一交叉验证法进行模型拟合</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">LiLi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
       </div>
     </div>
-  </div>
-</header>
 
-      <div class="outer">
-        <section id="main"><article id="post-线性回归算法" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2024/03/21/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95/" class="article-date">
-  <time class="dt-published" datetime="2024-03-20T16:05:18.000Z" itemprop="datePublished">2024-03-21</time>
-</a>
     
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0/">算法实现</a>►<a class="article-category-link" href="/categories/%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/">线性回归</a>
-  </div>
+  </aside>
 
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="p-name article-title" itemprop="headline name">
-      线性回归算法
-    </h1>
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
   
 
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://sxdtlili.github.io/2024/03/21/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="LiLi">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LiLi's Journey in Machine Learning">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="线性回归算法 | LiLi's Journey in Machine Learning">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          线性回归算法
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
       
-        <h1 id="第四章-线性回归算法"><a href="#第四章-线性回归算法" class="headerlink" title="第四章 线性回归算法"></a>第四章 线性回归算法</h1><h2 id="1-载入分析所需要的模块和函数"><a href="#1-载入分析所需要的模块和函数" class="headerlink" title="1. 载入分析所需要的模块和函数"></a>1. 载入分析所需要的模块和函数</h2><p>#载入分析所需要的模块和函数</p>
+
+      <time title="Created: 2024-03-21 00:05:18 / Modified: 00:46:01" itemprop="dateCreated datePublished" datetime="2024-03-21T00:05:18+08:00">2024-03-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0/" itemprop="url" rel="index"><span itemprop="name">算法实现</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/" itemprop="url" rel="index"><span itemprop="name">线性回归</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="第四章-线性回归算法"><a href="#第四章-线性回归算法" class="headerlink" title="第四章 线性回归算法"></a>第四章 线性回归算法</h1><h2 id="1-载入分析所需要的模块和函数"><a href="#1-载入分析所需要的模块和函数" class="headerlink" title="1. 载入分析所需要的模块和函数"></a>1. 载入分析所需要的模块和函数</h2><p>#载入分析所需要的模块和函数</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd#载入pandas模块，并简称为pd</span><br><span class="line">import numpy as np#载入numpy模块，并简称为np</span><br><span class="line">import matplotlib.pyplot as plt#载入matplotlib.pyplot模块，并简称为plt</span><br><span class="line">import seaborn as sns#载入seaborn模块，并简称为sns</span><br><span class="line">from scipy import stats#载入stats模块</span><br><span class="line">from scipy.stats import probplot#载入probplot模块</span><br><span class="line">import statsmodels.formula.api as smf#载入statsmodels.formula.api模块，并简称为smf</span><br><span class="line">from sklearn.linear_model import LinearRegression#载入LinearRegression模块</span><br><span class="line">from sklearn.model_selection import train_test_split#载入train_test_split模块</span><br><span class="line">from sklearn.metrics import mean_squared_error, r2_score#载入mean_squared_error, r2_score模块</span><br></pre></td></tr></table></figure>
 <h2 id="2-数据读取及观察"><a href="#2-数据读取及观察" class="headerlink" title="2. 数据读取及观察"></a>2. 数据读取及观察</h2><p>#习题1<br>#数据读取及观察</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">data=pd.read_csv(&#x27;D:/2023-2024-1/专业学习/机器学习原理与算法实现/Python机器学习原理与算法实现之PPT与源代码/正文源代码及数据文件/第四章 线性回归算法/数据4.2.csv&#x27;)</span><br><span class="line">data= data.iloc[:, 1:5]#提取M0流通中现金，M1狭义货币，M2广义货币三列</span><br></pre></td></tr></table></figure>
@@ -193,140 +300,90 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">rkfold = RepeatedKFold(n_splits=10, n_repeats=10, random_state=1)</span><br><span class="line">scores_mse = -cross_val_score(model, X, y, cv=rkfold, scoring=&#x27;neg_mean_squared_error&#x27;)#得到每个子样本的均方误差</span><br><span class="line">scores_mse.shape</span><br><span class="line"></span><br><span class="line">scores_mse.mean()</span><br></pre></td></tr></table></figure>
 <h2 id="14-使用留一交叉验证法进行模型拟合"><a href="#14-使用留一交叉验证法进行模型拟合" class="headerlink" title="14 使用留一交叉验证法进行模型拟合"></a>14 使用留一交叉验证法进行模型拟合</h2><h1 id="使用留一交叉验证法进行模型拟合"><a href="#使用留一交叉验证法进行模型拟合" class="headerlink" title="使用留一交叉验证法进行模型拟合"></a>使用留一交叉验证法进行模型拟合</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">loo = LeaveOneOut()</span><br><span class="line">scores_mse = -cross_val_score(model, X, y, cv=loo, scoring=&#x27;neg_mean_squared_error&#x27;)</span><br><span class="line">scores_mse.mean()  </span><br></pre></td></tr></table></figure>
 
-      
     </div>
-    <footer class="article-footer">
-      <a data-url="https://sxdtlili.github.io/2024/03/21/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95/" data-id="cltzzz8pa0000k4cyhcj15w2z" data-title="线性回归算法" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/" rel="tag">线性回归</a></li></ul>
 
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/" rel="tag"># 线性回归</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/03/20/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="prev" title="现代人工智能的基石——随机梯度下降法和误差反向传播">
+                  <i class="fa fa-angle-left"></i> 现代人工智能的基石——随机梯度下降法和误差反向传播
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
     </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">LiLi</span>
   </div>
-  
-    
-<nav id="article-nav">
-  
-  
-    <a href="/2024/03/20/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">现代人工智能的基石——随机梯度下降法和误差反向传播</div>
-    </a>
-  
-</nav>
-
-  
-</article>
-
-
-</section>
-        
-          <aside id="sidebar">
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/">数学基础</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/%E5%BE%AE%E7%A7%AF%E5%88%86/">微积分</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0/">算法实现</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/">线性回归</a></li></ul></li></ul>
-    </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
   </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B1%82%E5%AF%BC/" rel="tag">求导</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/" rel="tag">线性回归</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/%E6%B1%82%E5%AF%BC/" style="font-size: 10px;">求导</a> <a href="/tags/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/" style="font-size: 10px;">线性回归</a>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">March 2024</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2024/03/21/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95/">线性回归算法</a>
-          </li>
-        
-          <li>
-            <a href="/2024/03/20/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">现代人工智能的基石——随机梯度下降法和误差反向传播</a>
-          </li>
-        
-          <li>
-            <a href="/2024/03/20/hello-world/">Hello World</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      
-      &copy; 2024 LiLi<br>
-      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
 
     </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
-
-
-<script src="/js/jquery-3.6.4.min.js"></script>
-
-
+  </footer>
 
   
-<script src="/fancybox/jquery.fancybox.min.js"></script>
-
-
-
-
-<script src="/js/script.js"></script>
-
-
-
-
-
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
   </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
 </body>
 </html>
